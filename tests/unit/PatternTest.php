@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Phpolar\Validation;
+namespace Phpolar\Validators;
 
-use Phpolar\Validation\Tests\DataProviders\PatternDataProvider;
+use Phpolar\Validators\Tests\DataProviders\PatternDataProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Test;

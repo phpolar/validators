@@ -18,13 +18,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Phpolar\\Validation\\": "src"
+            "Phpolar\\Validators\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Phpolar\\Validation\\Tests\\DataProviders\\": "tests/__data-providers__",
-            "Phpolar\\Validation\\Tests\\Stubs\\": "tests/__stubs__"
+            "Phpolar\\Validators\\Tests\\DataProviders\\": "tests/__data-providers__",
+            "Phpolar\\Validators\\Tests\\Stubs\\": "tests/__stubs__"
         }
     },
     "provide": {

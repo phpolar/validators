@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phpolar\Validation\Tests\DataProviders;
+namespace Phpolar\Validators\Tests\DataProviders;
 
 final class MaxLengthDataProvider
 {
