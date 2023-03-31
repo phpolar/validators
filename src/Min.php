@@ -5,20 +5,33 @@ declare(strict_types=1);
 namespace Phpolar\Validators;
 
 use Attribute;
+use Phpolar\Validator\MessageGetterInterface;
 use Phpolar\Validator\ValidatorInterface;
+use Stringable;
 
 /**
  * Provides support for configuring the min value of a property.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Min extends AbstractPropertyValueExtractor implements ValidatorInterface
+final class Min implements ValidatorInterface, MessageGetterInterface
 {
-    public function __construct(private int|float $min)
+    /**
+     * The property's value.
+     */
+    public mixed $propVal;
+
+    public function __construct(private int|float $min, protected string | Stringable $message = "Value is less than the minimum")
     {
     }
 
     public function isValid(): bool
     {
-        return is_numeric($this->val) === true ? $this->val >= $this->min : true;
+        return is_numeric($this->propVal) === true ? $this->propVal >= $this->min : true;
+    }
+
+
+    public function getMessages(): array
+    {
+        return $this->isValid() === true ? [] : [$this->message];
     }
 }

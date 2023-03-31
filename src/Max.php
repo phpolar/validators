@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Phpolar\Validators;
 
 use Attribute;
-use Phpolar\Validator\ValidatorInterface;
+use Stringable;
 
 /**
  * Provides support for configuring the max value of a property.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Max extends AbstractPropertyValueExtractor implements ValidatorInterface
+final class Max extends AbstractValidator
 {
-    public function __construct(private int|float $max)
+    public function __construct(private int|float $max, protected string | Stringable $message = "Value is greater than the maximum")
     {
     }
 
     public function isValid(): bool
     {
-        return is_numeric($this->val) === true ? $this->val <= $this->max : true;
+        return is_numeric($this->propVal) === true ? $this->propVal <= $this->max : true;
     }
 }

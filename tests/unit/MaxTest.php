@@ -19,7 +19,7 @@ final class MaxTest extends TestCase
     #[DataProviderExternal(MaxDataProvider::class, "numberBelowMax")]
     public function test1(int|float $valBelowMax)
     {
-        $obj = new class ($valBelowMax)
+        $obj = new class($valBelowMax)
         {
             #[Max(MaxDataProvider::MAX)]
             public int|float $property;
@@ -34,20 +34,18 @@ final class MaxTest extends TestCase
          * @var Max[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[TestDox("Shall be invalid if numeric prop is GTE max with value \$valAboveMax")]
     #[DataProviderExternal(MaxDataProvider::class, "numberAboveMax")]
     public function test2(int|float $valAboveMax)
     {
-        $obj = new class ($valAboveMax)
+        $obj = new class($valAboveMax)
         {
             #[Max(MaxDataProvider::MAX)]
             public int|float $property;
@@ -62,19 +60,17 @@ final class MaxTest extends TestCase
          * @var Max[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertFalse($sut->isValid());
+            $this->assertNotEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[TestDox("Shall be valid if property type is non-numeric")]
     public function testA()
     {
-        $obj = new class (null)
+        $obj = new class(null)
         {
             #[Max(MaxDataProvider::MAX)]
             public mixed $property;
@@ -89,21 +85,24 @@ final class MaxTest extends TestCase
          * @var Max[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     /**
      * @return Max[]
      */
-    private function getSuts(object $obj) : array
+    private function getSuts(object $obj): array
     {
         $prop = new ReflectionProperty($obj, "property");
-        return array_map(fn (ReflectionAttribute $attr) => $attr->newInstance()->withPropVal($prop, $obj), $prop->getAttributes(Max::class));
+        $getSuts = static function (ReflectionAttribute $attr) use ($prop, $obj) {
+            $instance = $attr->newInstance();
+            $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+            return $instance;
+        };
+        return array_map($getSuts, $prop->getAttributes(Max::class));
     }
 }

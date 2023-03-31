@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Phpolar\Validators;
 
 use Attribute;
-use Phpolar\Validator\ValidatorInterface;
+use Stringable;
 
 /**
  * Provides support for configuring the max length of a property.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class MaxLength extends AbstractPropertyValueExtractor implements ValidatorInterface
+final class MaxLength extends AbstractValidator
 {
-    public function __construct(private int $maxLen)
+    public function __construct(private int $maxLen, protected string | Stringable $message = "Maximum length validation failed")
     {
     }
 
     public function isValid(): bool
     {
         return $this->maxLen >= match (true) {
-            is_string($this->val) => mb_strlen($this->val),
-            is_int($this->val) => strlen(strval(abs($this->val))),
+            is_string($this->propVal) => mb_strlen($this->propVal),
+            is_int($this->propVal) => strlen(strval(abs($this->propVal))),
             default => $this->maxLen,
         };
     }
