@@ -4,21 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7333d1a33668ca9f0000841c922e6500",
+    "content-hash": "633cf9f9917ac03c4b3f80213e8ddd15",
     "packages": [
         {
             "name": "phpolar/validator",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpolar/validator.git",
-                "reference": "90023665f9d8e23264ec909344d1965151162b55"
+                "reference": "ff9ae723ecb93f751f6584cb4458983382c15d6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpolar/validator/zipball/90023665f9d8e23264ec909344d1965151162b55",
-                "reference": "90023665f9d8e23264ec909344d1965151162b55",
+                "url": "https://api.github.com/repos/phpolar/validator/zipball/ff9ae723ecb93f751f6584cb4458983382c15d6d",
+                "reference": "ff9ae723ecb93f751f6584cb4458983382c15d6d",
                 "shasum": ""
+            },
+            "suggest": {
+                "phpolar/validators": "A set of nifty validators"
             },
             "type": "library",
             "autoload": {
@@ -39,9 +42,9 @@
             "description": "Unifies validator implementations",
             "support": {
                 "issues": "https://github.com/phpolar/validator/issues",
-                "source": "https://github.com/phpolar/validator/tree/1.0.0"
+                "source": "https://github.com/phpolar/validator/tree/1.0.2"
             },
-            "time": "2023-03-30T19:41:35+00:00"
+            "time": "2023-03-31T10:57:56+00:00"
         }
     ],
     "packages-dev": [
