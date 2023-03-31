@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Phpolar;
 
-use Phpolar\Validation\MaxLength;
-use Phpolar\Validation\Pattern;
-use Phpolar\Validation\Required;
-use Phpolar\Validation\Tests\DataProviders\MaxLengthDataProvider;
+use Phpolar\Validators\MaxLength;
+use Phpolar\Validators\Pattern;
+use Phpolar\Validators\Required;
+use Phpolar\Validators\Tests\DataProviders\MaxLengthDataProvider;
 use Phpolar\Validator\ValidatorInterface;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -42,13 +42,13 @@ final class MemoryUsageTest extends TestCase
         };
 
         $totalUsed = -memory_get_usage();
-        $this->checkAttrValidation($obj);
+        $this->checkAttrValidators($obj);
         $totalUsed += memory_get_usage();
         $this->assertGreaterThan(0, $totalUsed);
         $this->assertLessThanOrEqual((int) $projectMemoryUsageThreshold, $totalUsed);
     }
 
-    private function checkAttrValidation(object $obj): void
+    private function checkAttrValidators(object $obj): void
     {
         $reflectionObj = new ReflectionObject($obj);
         $props = $reflectionObj->getProperties();

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phpolar\Validation;
+namespace Phpolar\Validators;
 
 use ReflectionProperty;
 
