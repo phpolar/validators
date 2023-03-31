@@ -13,14 +13,14 @@ use ReflectionAttribute;
 use ReflectionProperty;
 
 #[CoversClass(Pattern::class)]
-#[CoversClass(AbstractPropertyValueExtractor::class)]
+#[CoversClass(AbstractValidator::class)]
 final class PatternTest extends TestCase
 {
     #[Test]
     #[DataProviderExternal(PatternDataProvider::class, "validEmails")]
     public function shallBeValidEmailBasedOnPattern(string $val)
     {
-        $obj = new class ($val)
+        $obj = new class($val)
         {
             #[Pattern(PatternDataProvider::EMAIL_PATTERN)]
             public mixed $property;
@@ -35,20 +35,18 @@ final class PatternTest extends TestCase
          * @var Pattern[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[Test]
     #[DataProviderExternal(PatternDataProvider::class, "validPhoneNumbers")]
     public function shallBeValidPhoneNumberBasedOnPattern(string $val)
     {
-        $obj = new class ($val)
+        $obj = new class($val)
         {
             #[Pattern(PatternDataProvider::PHONE_PATTERN)]
             public mixed $property;
@@ -63,19 +61,17 @@ final class PatternTest extends TestCase
          * @var Pattern[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[Test]
     public function shallBeInvalidIfPropIsNotSet()
     {
-        $obj = new class ()
+        $obj = new class()
         {
             #[Pattern(PatternDataProvider::PHONE_PATTERN)]
             public mixed $property;
@@ -89,20 +85,18 @@ final class PatternTest extends TestCase
          * @var Pattern[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertFalse($sut->isValid());
+            $this->assertNotEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[Test]
     #[DataProviderExternal(PatternDataProvider::class, "invalidEmails")]
     public function shallBeInvalidIfPropDoesNotMatchPattern(mixed $val)
     {
-        $obj = new class ($val)
+        $obj = new class($val)
         {
             #[Pattern(PatternDataProvider::EMAIL_PATTERN)]
             public mixed $property;
@@ -117,21 +111,24 @@ final class PatternTest extends TestCase
          * @var Pattern[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertFalse($sut->isValid());
+            $this->assertNotEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     /**
      * @return Pattern[]
      */
-    private function getSuts(object $obj) : array
+    private function getSuts(object $obj): array
     {
         $prop = new ReflectionProperty($obj, "property");
-        return array_map(fn (ReflectionAttribute $attr) => $attr->newInstance()->withPropVal($prop, $obj), $prop->getAttributes(Pattern::class));
+        $getAttrs = static function (ReflectionAttribute $attr) use ($prop, $obj) {
+            $instance = $attr->newInstance();
+            $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+            return $instance;
+        };
+        return array_map($getAttrs, $prop->getAttributes(Pattern::class));
     }
 }

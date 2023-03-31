@@ -19,7 +19,7 @@ final class RequiredTest extends TestCase
     #[DataProviderExternal(RequiredDataProvider::class, "nonEmptyVals")]
     public function shallBeValidIfPropIsSetWithNonEmptyVal(mixed $val)
     {
-        $obj = new class ($val)
+        $obj = new class($val)
         {
             #[Required]
             public mixed $property;
@@ -46,7 +46,7 @@ final class RequiredTest extends TestCase
     #[Test]
     public function shallBeInvalidIfPropIsNotSet()
     {
-        $obj = new class ()
+        $obj = new class()
         {
             #[Required]
             public mixed $property;
@@ -73,7 +73,7 @@ final class RequiredTest extends TestCase
     #[DataProviderExternal(RequiredDataProvider::class, "emptyVals")]
     public function shallBeInvalidIfPropIsEmpty(mixed $emptyVals)
     {
-        $obj = new class ($emptyVals)
+        $obj = new class($emptyVals)
         {
             #[Required]
             public mixed $property;
@@ -101,9 +101,9 @@ final class RequiredTest extends TestCase
     /**
      * @return Required[]
      */
-    private function getSuts(object $obj) : array
+    private function getSuts(object $obj): array
     {
         $prop = new ReflectionProperty($obj, "property");
-        return array_map(fn (ReflectionAttribute $attr) => $attr->newInstance()->withPropVal($prop, $obj), $prop->getAttributes(Required::class));
+        return array_map(static fn (ReflectionAttribute $attr) => $attr->newInstance()->withRequiredPropVal($prop, $obj), $prop->getAttributes(Required::class));
     }
 }

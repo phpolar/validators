@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Phpolar;
 
+use Phpolar\Validator\MessageGetterInterface;
 use Phpolar\Validators\MaxLength;
 use Phpolar\Validators\Pattern;
 use Phpolar\Validators\Required;
@@ -26,7 +27,7 @@ final class MemoryUsageTest extends TestCase
     public function shallBeBelowThreshold1(string $projectMemoryUsageThreshold = PROJECT_MEMORY_USAGE_THRESHOLD)
     {
         $valBelowMax = str_repeat("a", MaxLengthDataProvider::MAX_LEN - 1);
-        $obj = new class ($valBelowMax)
+        $obj = new class($valBelowMax)
         {
             #[MaxLength(MaxLengthDataProvider::MAX_LEN)]
             #[Required]
@@ -55,11 +56,22 @@ final class MemoryUsageTest extends TestCase
 
         foreach ($props as $prop) {
             /**
-             * @var ValidatorInterface[] $validators
+             * @var (ValidatorInterface&MessageGetterInterface)[] $validators
              */
-            $validators = array_map(fn (ReflectionAttribute $attr) => $attr->newInstance()->withPropVal($prop, $obj), $prop->getAttributes());
+            $validators = array_map(
+                static function (ReflectionAttribute $attr) use ($prop, $obj) {
+                    $instance = $attr->newInstance();
+                    if (property_exists($obj, "withRequiredPropVal") === true) {
+                        return $instance->withRequiredPropVal($prop, $obj);
+                    }
+                    $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+                    return $instance;
+                },
+                $prop->getAttributes()
+            );
             foreach ($validators as $validator) {
                 $validator->isValid();
+                $validator->getMessages();
             }
         }
     }
