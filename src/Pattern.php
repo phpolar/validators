@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Phpolar\Validators;
 
 use Attribute;
-use Phpolar\Validator\ValidatorInterface;
+use Stringable;
 
 /**
  * Provides support for configuring the expected pattern of a property.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Pattern extends AbstractPropertyValueExtractor implements ValidatorInterface
+final class Pattern extends AbstractValidator
 {
-    public function __construct(private string $pattern)
+    public function __construct(private string $pattern, protected string | Stringable $message = "Pattern validation failed")
     {
     }
 
     public function isValid(): bool
     {
-        return is_string($this->val) && preg_match($this->pattern, $this->val) === 1;
+        return is_string($this->propVal) && preg_match($this->pattern, $this->propVal) === 1;
     }
 }

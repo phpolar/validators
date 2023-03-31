@@ -20,7 +20,7 @@ final class MinTest extends TestCase
     #[DataProviderExternal(MinDataProvider::class, "numberAboveMin")]
     public function shallBeValidIfNumericPropIsLteMax(int|float $valAboveMin)
     {
-        $obj = new class ($valAboveMin)
+        $obj = new class($valAboveMin)
         {
             #[Min(MinDataProvider::MIN)]
             public int|float $property;
@@ -35,20 +35,18 @@ final class MinTest extends TestCase
          * @var Min[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[Test]
     #[DataProviderExternal(MinDataProvider::class, "numberBelowMin")]
     public function shallBeInvalidIfNumericPropIsGtMax(int|float $valBelowMin)
     {
-        $obj = new class ($valBelowMin)
+        $obj = new class($valBelowMin)
         {
             #[Min(MinDataProvider::MIN)]
             public int|float $property;
@@ -63,19 +61,17 @@ final class MinTest extends TestCase
          * @var Min[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertFalse($sut->isValid());
+            $this->assertNotEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     #[TestDox("Shall be valid if property type is non-numeric")]
     public function testA()
     {
-        $obj = new class (null)
+        $obj = new class(null)
         {
             #[Min(MinDataProvider::MIN)]
             public mixed $property;
@@ -90,21 +86,24 @@ final class MinTest extends TestCase
          * @var Min[] $suts
          */
         $suts = $this->getSuts($obj);
-        $foundSut = false;
-
+        $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $foundSut = true;
             $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessages());
         }
-        $this->assertTrue($foundSut);
     }
 
     /**
      * @return Min[]
      */
-    private function getSuts(object $obj) : array
+    private function getSuts(object $obj): array
     {
         $prop = new ReflectionProperty($obj, "property");
-        return array_map(fn (ReflectionAttribute $attr) => $attr->newInstance()->withPropVal($prop, $obj), $prop->getAttributes(Min::class));
+        $getAttrs = static function (ReflectionAttribute $attr) use ($prop, $obj) {
+            $instance = $attr->newInstance();
+            $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+            return $instance;
+        };
+        return array_map($getAttrs, $prop->getAttributes(Min::class));
     }
 }

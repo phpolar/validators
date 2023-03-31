@@ -5,26 +5,33 @@ declare(strict_types=1);
 namespace Phpolar\Validators;
 
 use Attribute;
-use Phpolar\Validator\ValidatorInterface;
 use ReflectionProperty;
+use Stringable;
 
 /**
  * Provides support for marking a property as requiring a value.
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
-final class Required extends AbstractPropertyValueExtractor implements ValidatorInterface
+final class Required extends AbstractValidator
 {
-    protected mixed $val;
+    public function __construct(protected string | Stringable $message = "Required value")
+    {
+    }
 
     public function isValid(): bool
     {
-        return $this->val !== "" && $this->val !== null;
+        return $this->propVal !== "" && $this->propVal !== null;
     }
 
-    public function withPropVal(ReflectionProperty $prop, object $obj): static
+    /**
+     * Validation of required property's
+     * requires that the property is not set or set
+     * to null.
+     */
+    public function withRequiredPropVal(ReflectionProperty $prop, object $obj): static
     {
         $copy = clone $this;
-        $copy->val = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : null;
+        $copy->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : null;
         return $copy;
     }
 }

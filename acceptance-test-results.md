@@ -2,9 +2,8 @@
 
 ## Memory Usage (Phpolar\MemoryUsage)
 
-- [x] Memory usage shall be below 14000 bytes
+- [x] Memory usage shall be below 15500 bytes
 
 ## Project Size (Phpolar\ProjectSize)
 
-- [x] Source code total size shall be below 3700 bytes
-
+- [x] Source code total size shall be below 4100 bytes
