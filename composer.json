@@ -28,7 +28,7 @@
         }
     },
     "provide": {
-        "phpolar/validator-implementation": "1.0.0"
+        "phpolar/validator-implementation": "1.0.3"
     },
     "require": {
         "php": ">=8.1",
