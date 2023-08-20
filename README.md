@@ -6,6 +6,8 @@
 
 A set of property validators.
 
+[![PHPMD](https://github.com/phpolar/validators/actions/workflows/phpmd.yml/badge.svg)](https://github.com/phpolar/validators/actions/workflows/phpmd.yml) [![PHP Composer](https://github.com/phpolar/validators/actions/workflows/php.yml/badge.svg)](https://github.com/phpolar/validators/actions/workflows/php.yml)
+
 ## Usage
 
 ```php
