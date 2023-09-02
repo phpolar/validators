@@ -38,7 +38,7 @@ final class MinLengthTest extends TestCase
         $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
             $this->assertTrue($sut->isValid());
-            $this->assertEmpty($sut->getMessages());
+            $this->assertEmpty($sut->getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ final class MinLengthTest extends TestCase
         $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
             $this->assertFalse($sut->isValid());
-            $this->assertNotEmpty($sut->getMessages());
+            $this->assertNotEmpty($sut->getMessage());
         }
     }
 
@@ -90,7 +90,7 @@ final class MinLengthTest extends TestCase
         $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
             $this->assertTrue($sut->isValid());
-            $this->assertEmpty($sut->getMessages());
+            $this->assertEmpty($sut->getMessage());
         }
     }
 
@@ -116,7 +116,7 @@ final class MinLengthTest extends TestCase
         $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
             $this->assertFalse($sut->isValid());
-            $this->assertNotEmpty($sut->getMessages());
+            $this->assertNotEmpty($sut->getMessage());
         }
     }
 
@@ -142,7 +142,7 @@ final class MinLengthTest extends TestCase
         $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
             $this->assertTrue($sut->isValid());
-            $this->assertEmpty($sut->getMessages());
+            $this->assertEmpty($sut->getMessage());
         }
     }
 
