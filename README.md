@@ -13,13 +13,13 @@ A set of property validators.
 ```php
 class Something
 {
-        #[Required]
-        #[Pattern("/^[A-Za-z]$/")]
-        public string $name;
+    #[Required]
+    #[Pattern("/^[A-Za-z]$/")]
+    public string $name;
 
-        #[Max(12)]
-        #[Min(2)]
-        public int $age;
+    #[Max(12)]
+    #[Min(2)]
+    public int $age;
 }
 
 
