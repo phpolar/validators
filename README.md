@@ -2,7 +2,7 @@
   <a href="https://github.com/phpolar"><img src="phpolar.svg" width="240" alt="Phpolar Logo" /></a>
 </p>
 
-# Validation
+# Validators
 
 A set of property validators.
 
