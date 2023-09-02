@@ -61,9 +61,6 @@ final class MemoryUsageTest extends TestCase
             $validators = array_map(
                 static function (ReflectionAttribute $attr) use ($prop, $obj) {
                     $instance = $attr->newInstance();
-                    if (property_exists($obj, "withRequiredPropVal") === true) {
-                        return $instance->withRequiredPropVal($prop, $obj);
-                    }
                     $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
                     return $instance;
                 },
@@ -71,7 +68,7 @@ final class MemoryUsageTest extends TestCase
             );
             foreach ($validators as $validator) {
                 $validator->isValid();
-                $validator->getMessages();
+                $validator->getMessage();
             }
         }
     }

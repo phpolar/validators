@@ -340,11 +340,8 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
-        'vendor/phan/phan/src/Phan',
-        'vendor/php-coveralls/php-coveralls/src',
         'vendor/phpmd/phpmd/src/main/php',
-        'vendor/phpolar/validator/src',
-        'vendor/phpunit/phpunit/src',
+        'vendor/php-contrib/validator/src',
     ],
 
     // A list of individual files to include in analysis

@@ -104,6 +104,16 @@ final class RequiredTest extends TestCase
     private function getSuts(object $obj): array
     {
         $prop = new ReflectionProperty($obj, "property");
-        return array_map(static fn (ReflectionAttribute $attr) => $attr->newInstance()->withRequiredPropVal($prop, $obj), $prop->getAttributes(Required::class));
+        return array_map(
+            static function (ReflectionAttribute $attr) use ($prop, $obj) {
+                /**
+                 * @var Required
+                 */
+                $sut = $attr->newInstance();
+                $sut->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+                return $sut;
+            },
+            $prop->getAttributes(Required::class)
+        );
     }
 }

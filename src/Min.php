@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Phpolar\Validators;
 
 use Attribute;
-use Phpolar\Validator\MessageGetterInterface;
-use Phpolar\Validator\ValidatorInterface;
+use PhpContrib\Validator\MessageGetterInterface;
+use PhpContrib\Validator\ValidatorInterface;
 use Stringable;
 
 /**
@@ -30,8 +30,8 @@ final class Min implements ValidatorInterface, MessageGetterInterface
     }
 
 
-    public function getMessages(): array
+    public function getMessage(): string
     {
-        return $this->isValid() === true ? [] : [$this->message];
+        return $this->isValid() === true ? "" : (string) $this->message;
     }
 }
