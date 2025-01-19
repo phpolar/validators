@@ -26,3 +26,5 @@ class Something
 $validationAttr->isValid();
 
 ```
+
+## [API Documentation](https://phpolar.github.io/validators/)
