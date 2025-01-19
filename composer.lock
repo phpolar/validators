@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62edbbf5a874186bf42b919d925513b1",
+    "content-hash": "684a400c42b5e9b0432e2e6e49098e0e",
     "packages": [
         {
             "name": "php-contrib/validator",
