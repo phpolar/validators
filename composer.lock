@@ -4,21 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "684a400c42b5e9b0432e2e6e49098e0e",
+    "content-hash": "6a35bec6e3aaae810e24ef4644c7347c",
     "packages": [
         {
             "name": "php-contrib/validator",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-contrib/validator.git",
-                "reference": "48899135fc93ad19fca120a85f836f09e6786b59"
+                "reference": "5870d03cf115e92ff28adf78587097e6df7eaacc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-contrib/validator/zipball/48899135fc93ad19fca120a85f836f09e6786b59",
-                "reference": "48899135fc93ad19fca120a85f836f09e6786b59",
+                "url": "https://api.github.com/repos/php-contrib/validator/zipball/5870d03cf115e92ff28adf78587097e6df7eaacc",
+                "reference": "5870d03cf115e92ff28adf78587097e6df7eaacc",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.0"
             },
             "suggest": {
                 "phpolar/validators": "A set of nifty validators"
@@ -42,9 +45,9 @@
             "description": " Supports validation of property values ",
             "support": {
                 "issues": "https://github.com/php-contrib/validator/issues",
-                "source": "https://github.com/php-contrib/validator/tree/1.0.0"
+                "source": "https://github.com/php-contrib/validator/tree/2.0.0"
             },
-            "time": "2023-09-02T16:00:07+00:00"
+            "time": "2025-01-20T13:39:19+00:00"
         }
     ],
     "packages-dev": [
