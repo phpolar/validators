@@ -10,6 +10,7 @@
 /.gitignore                 export-ignore
 /.phan                      export-ignore
 /.vscode	            export-ignore
+/.phpdoc                    export-ignore
 /phpcs.xml                  export-ignore
 /phpdoc.xml                 export-ignore
 /phpunit.xml                export-ignore
