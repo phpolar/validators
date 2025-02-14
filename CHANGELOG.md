@@ -1,3 +1,9 @@
+## 1.2.2 (2025-02-13)
+
+### Fix
+
+- remove configuration files from dist
+
 ## 1.2.1 (2025-01-20)
 
 ### Fix
