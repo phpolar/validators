@@ -30,7 +30,6 @@ final class PatternDataProvider
     public static function invalidEmails(): mixed
     {
         return [
-            [null],
             [uniqid()],
             [true],
             [false],

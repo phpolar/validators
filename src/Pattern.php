@@ -19,6 +19,6 @@ final class Pattern extends AbstractValidator
 
     public function isValid(): bool
     {
-        return is_string($this->propVal) && preg_match($this->pattern, $this->propVal) === 1;
+        return $this->propVal === null ? true : is_string($this->propVal) && preg_match($this->pattern, $this->propVal) === 1;
     }
 }
