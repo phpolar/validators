@@ -6,7 +6,7 @@
 
 A set of property validators.
 
-[![Version](https://poser.pugx.org/phpolar/validators/version)](https://packagist.org/packages/phpolar/validators) [![PHP Version Require](https://poser.pugx.org/phpolar/validators/require/php)](https://packagist.org/packages/phpolar/validators) [![Total Downloads](https://poser.pugx.org/phpolar/validators/downloads)](https://packagist.org/packages/phpolar/validators) [![PHPMD](https://github.com/phpolar/validators/actions/workflows/phpmd.yml/badge.svg)](https://github.com/phpolar/validators/actions/workflows/phpmd.yml) [![PHP Composer](https://github.com/phpolar/validators/actions/workflows/pr-quality.yml/badge.svg)](https://github.com/phpolar/validators/actions/workflows/pr-quality.yml)
+[![Version](https://poser.pugx.org/phpolar/validators/version)](https://packagist.org/packages/phpolar/validators) [![PHP Version Require](https://poser.pugx.org/phpolar/validators/require/php)](https://packagist.org/packages/phpolar/validators) [![Total Downloads](https://poser.pugx.org/phpolar/validators/downloads)](https://packagist.org/packages/phpolar/validators) [![Weekly Check](https://github.com/phpolar/validators/actions/workflows/weekly.yml/badge.svg)](https://github.com/phpolar/validators/actions/workflows/weekly.yml) [![Source code only changes](https://github.com/phpolar/validators/actions/workflows/source-changes.yml/badge.svg)](https://github.com/phpolar/validators/actions/workflows/source-changes.yml)
 
 ## Usage
 
