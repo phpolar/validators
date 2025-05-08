@@ -69,7 +69,7 @@ final class PatternTest extends TestCase
     }
 
     #[Test]
-    public function shallBeInvalidIfPropIsNotSet()
+    public function shallBeValidIfPropIsNotSet()
     {
         $obj = new class()
         {
@@ -87,8 +87,8 @@ final class PatternTest extends TestCase
         $suts = $this->getSuts($obj);
         $this->assertNotEmpty($suts);
         foreach ($suts as $sut) {
-            $this->assertFalse($sut->isValid());
-            $this->assertNotEmpty($sut->getMessage());
+            $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessage());
         }
     }
 
