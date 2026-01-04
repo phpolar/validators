@@ -20,13 +20,11 @@ final class Min implements ValidatorInterface, MessageGetterInterface
      */
     public mixed $propVal;
 
-    public function __construct(private int|float $min, protected string | Stringable $message = "Value is less than the minimum")
-    {
-    }
+    public function __construct(private int|float $min, protected string | Stringable $message = "Value is less than the minimum") {}
 
     public function isValid(): bool
     {
-        return is_numeric($this->propVal) === true ? $this->propVal >= $this->min : true;
+        return isset($this->propVal) === true && is_numeric($this->propVal) === true ? $this->propVal >= $this->min : true;
     }
 
 

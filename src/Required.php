@@ -13,14 +13,10 @@ use Stringable;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Required extends AbstractValidator
 {
-    public function __construct(protected string | Stringable $message = "Required value")
-    {
-    }
+    public function __construct(protected string | Stringable $message = "Required value") {}
 
     public function isValid(): bool
     {
-        return isset($this->propVal)
-            && $this->propVal !== ""
-            && $this->propVal !== null;
+        return isset($this->propVal) === true && ($this->propVal === false || empty($this->propVal) === false);
     }
 }

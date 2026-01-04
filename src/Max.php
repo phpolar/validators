@@ -13,12 +13,10 @@ use Stringable;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Max extends AbstractValidator
 {
-    public function __construct(private int|float $max, protected string | Stringable $message = "Value is greater than the maximum")
-    {
-    }
+    public function __construct(private int|float $max, protected string | Stringable $message = "Value is greater than the maximum") {}
 
     public function isValid(): bool
     {
-        return is_numeric($this->propVal) === true ? $this->propVal <= $this->max : true;
+        return isset($this->propVal) === true && is_numeric($this->propVal) === true ? $this->propVal <= $this->max : true;
     }
 }

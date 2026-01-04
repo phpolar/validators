@@ -13,13 +13,12 @@ use Stringable;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class MinLength extends AbstractValidator
 {
-    public function __construct(private int $minLen, protected string | Stringable $message = "Minimum length validation failed")
-    {
-    }
+    public function __construct(private int $minLen, protected string | Stringable $message = "Minimum length validation failed") {}
 
     public function isValid(): bool
     {
         return $this->minLen <= match (true) {
+            isset($this->propVal) === false => $this->minLen,
             is_string($this->propVal) => mb_strlen($this->propVal),
             is_int($this->propVal) => strlen(strval(abs($this->propVal))),
             default => $this->minLen,
