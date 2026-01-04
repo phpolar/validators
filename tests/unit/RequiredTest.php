@@ -50,10 +50,6 @@ final class RequiredTest extends TestCase
         {
             #[Required]
             public mixed $property;
-
-            public function __construct()
-            {
-            }
         };
 
         /**
@@ -109,9 +105,14 @@ final class RequiredTest extends TestCase
                 /**
                  * @var Required
                  */
-                $sut = $attr->newInstance();
-                $sut->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
-                return $sut;
+                $instance = $attr->newInstance();
+                if ($prop->isInitialized($obj) === true) {
+                    $instance->propVal = $prop->getValue($obj);
+                }
+                if ($prop->hasDefaultValue() === true) {
+                    $instance->propVal = $prop->getDefaultValue();
+                }
+                return $instance;
             },
             $prop->getAttributes(Required::class)
         );

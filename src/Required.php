@@ -19,6 +19,8 @@ final class Required extends AbstractValidator
 
     public function isValid(): bool
     {
-        return $this->propVal !== "" && $this->propVal !== null;
+        return isset($this->propVal)
+            && $this->propVal !== ""
+            && $this->propVal !== null;
     }
 }
