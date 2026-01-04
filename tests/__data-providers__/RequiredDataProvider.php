@@ -13,6 +13,7 @@ final class RequiredDataProvider
             [uniqid()],
             [true],
             [false],
+            [0],
         ];
     }
 
