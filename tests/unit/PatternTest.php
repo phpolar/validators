@@ -75,10 +75,6 @@ final class PatternTest extends TestCase
         {
             #[Pattern(PatternDataProvider::PHONE_PATTERN)]
             public mixed $property;
-
-            public function __construct()
-            {
-            }
         };
 
         /**
@@ -126,7 +122,12 @@ final class PatternTest extends TestCase
         $prop = new ReflectionProperty($obj, "property");
         $getAttrs = static function (ReflectionAttribute $attr) use ($prop, $obj) {
             $instance = $attr->newInstance();
-            $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+            if ($prop->isInitialized($obj) === true) {
+                $instance->propVal = $prop->getValue($obj);
+            }
+            if ($prop->hasDefaultValue() === true) {
+                $instance->propVal = $prop->getDefaultValue();
+            }
             return $instance;
         };
         return array_map($getAttrs, $prop->getAttributes(Pattern::class));

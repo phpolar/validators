@@ -13,12 +13,12 @@ use Stringable;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Pattern extends AbstractValidator
 {
-    public function __construct(private string $pattern, protected string | Stringable $message = "Pattern validation failed")
-    {
-    }
+    public function __construct(private string $pattern, protected string | Stringable $message = "Pattern validation failed") {}
 
     public function isValid(): bool
     {
-        return $this->propVal === null ? true : is_string($this->propVal) && preg_match($this->pattern, $this->propVal) === 1;
+        return isset($this->propVal) === false
+            || (is_string($this->propVal)
+                && preg_match($this->pattern, $this->propVal) === 1);
     }
 }

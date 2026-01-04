@@ -143,6 +143,25 @@ final class MaxLengthTest extends TestCase
         }
     }
 
+    #[TestDox("Shall be valid if property is not initialized")]
+    public function testX()
+    {
+        $obj = new class(null)
+        {
+            #[MaxLength(MaxLengthDataProvider::MAX_LEN)]
+            public mixed $property;
+        };
+        /**
+         * @var MaxLength[] $suts
+         */
+        $suts = $this->getSuts($obj);
+        $this->assertNotEmpty($suts);
+        foreach ($suts as $sut) {
+            $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessage());
+        }
+    }
+
     /**
      * @return MaxLength[]
      */
@@ -151,7 +170,12 @@ final class MaxLengthTest extends TestCase
         $prop = new ReflectionProperty($obj, "property");
         $getSuts = static function (ReflectionAttribute $attr) use ($prop, $obj) {
             $instance = $attr->newInstance();
-            $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+            if ($prop->isInitialized($obj) === true) {
+                $instance->propVal = $prop->getValue($obj);
+            }
+            if ($prop->hasDefaultValue() === true) {
+                $instance->propVal = $prop->getDefaultValue();
+            }
             return $instance;
         };
         return array_map($getSuts, $prop->getAttributes(MaxLength::class));

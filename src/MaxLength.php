@@ -20,6 +20,7 @@ final class MaxLength extends AbstractValidator
     public function isValid(): bool
     {
         return $this->maxLen >= match (true) {
+            isset($this->propVal) === false => $this->maxLen,
             is_string($this->propVal) => mb_strlen($this->propVal),
             is_int($this->propVal) => strlen(strval(abs($this->propVal))),
             default => $this->maxLen,

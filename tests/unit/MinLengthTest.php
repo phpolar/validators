@@ -120,7 +120,6 @@ final class MinLengthTest extends TestCase
         }
     }
 
-
     #[TestDox("Shall be valid if property type does not have a length")]
     public function testA()
     {
@@ -146,12 +145,37 @@ final class MinLengthTest extends TestCase
         }
     }
 
+    #[TestDox("Shall be valid if property is not initialized")]
+    public function testX()
+    {
+        $obj = new class()
+        {
+            #[MinLength(MinLengthDataProvider::MIN_LEN)]
+            public mixed $property;
+        };
+
+        /**
+         * @var MinLength[] $suts
+         */
+        $suts = $this->getSuts($obj);
+        $this->assertNotEmpty($suts);
+        foreach ($suts as $sut) {
+            $this->assertTrue($sut->isValid());
+            $this->assertEmpty($sut->getMessage());
+        }
+    }
+
     private function getSuts(object $obj): array
     {
         $prop = new ReflectionProperty($obj, "property");
         $getAttrs = static function (ReflectionAttribute $attr) use ($prop, $obj) {
             $instance = $attr->newInstance();
-            $instance->propVal = $prop->isInitialized($obj) === true ? $prop->getValue($obj) : $prop->getDefaultValue();
+            if ($prop->isInitialized($obj) === true) {
+                $instance->propVal = $prop->getValue($obj);
+            }
+            if ($prop->hasDefaultValue() === true) {
+                $instance->propVal = $prop->getDefaultValue();
+            }
             return $instance;
         };
         return array_map($getAttrs, $prop->getAttributes(MinLength::class));
